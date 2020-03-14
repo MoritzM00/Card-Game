@@ -2,6 +2,12 @@ package model.buildables.rescue;
 
 import static model.BuildableObject.HANG_GLIDER;
 
+/**
+ * A hang glider is a buildable of type {@link Rescue}.
+ *
+ * @author Moritz
+ * @version 1.0
+ */
 public class HangGlider extends Rescue {
 
     private static final int WOOD = 2;

@@ -19,6 +19,7 @@ import static model.GameState.*;
 
 /**
  * This class manages the card game.
+ * Consists of a {@link Scavenger} and a {@link CardHolder}.
  *
  * @author Moritz
  * @version 1.0
@@ -120,8 +121,7 @@ public class CardGameManager implements Backend {
      * @return the resulting game state
      * @throws RollDiceException if the player chose the wrong dice.
      */
-    protected GameState checkEndeavor(Rescue rescue, int numOfPips, int roll) throws RollDiceException {
-        // the last built object can only be a hang glider or a sailing craft
+    private GameState checkEndeavor(Rescue rescue, int numOfPips, int roll) throws RollDiceException {
         int requiredNumOfPips = rescue.getRequiredNumOfPips();
         if (requiredNumOfPips != numOfPips
                 || roll > numOfPips) {
@@ -146,7 +146,7 @@ public class CardGameManager implements Backend {
      * @return the resulting game state
      * @throws RollDiceException if the player chose the wrong dice.
      */
-    protected GameState checkEncounter(Animal animalCard, int numOfPips, int roll)
+    private GameState checkEncounter(Animal animalCard, int numOfPips, int roll)
             throws RollDiceException {
         int requiredNumOfPips = animalCard.getRequiredNumOfPips();
         if (requiredNumOfPips != numOfPips

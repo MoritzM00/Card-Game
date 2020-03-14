@@ -47,6 +47,11 @@ public class CardHolder {
         return next;
     }
 
+    /**
+     * Returns true if there are cards left on the stack.
+     *
+     * @return true if there are still cards on the stack
+     */
     protected boolean hasCards() {
         return !cardStack.isEmpty();
     }

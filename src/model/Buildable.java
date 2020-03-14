@@ -35,13 +35,6 @@ public abstract class Buildable {
     public abstract GameState takeAction();
 
     /**
-     * Returns true if the this buildable is a rescue.
-     *
-     * @return true if it is a rescue
-     */
-    public abstract boolean isRescue();
-
-    /**
      * Returns the amount of resources needed, stored in a integer array
      * of length 3. The index indicates the type of resource.
      *

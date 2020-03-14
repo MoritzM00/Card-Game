@@ -4,6 +4,12 @@ import model.GameState;
 
 import static model.BuildableObject.STEAM_BOAT;
 
+/**
+ * A steam boat is a buildable of type {@link Rescue}.
+ *
+ * @author Moritz
+ * @version 1.0
+ */
 public class SteamBoat extends Rescue {
 
     private static final int WOOD = 0;

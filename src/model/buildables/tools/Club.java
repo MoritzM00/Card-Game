@@ -2,6 +2,14 @@ package model.buildables.tools;
 
 import static model.BuildableObject.CLUB;
 
+/**
+ * A club is a {@link Tool}.
+ *
+ * The fight bonus of a club is 1.
+ *
+ * @author Moritz
+ * @version 1.0
+ */
 public class Club extends Tool {
 
     private static final int WOOD = 3;

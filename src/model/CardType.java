@@ -19,7 +19,7 @@ import static model.Card.*;
 public abstract class CardType {
 
     /**
-     * The amount of card types exist
+     * The amount of card types that exist
      */
     public static final int AMOUNT_OF_CARD_TYPES = 7;
 
@@ -46,37 +46,37 @@ public abstract class CardType {
     /**
      * The string representation for wood.
      */
-    public final static String WOOD = "wood";
+    public static final String WOOD = "wood";
 
     /**
      * The string representation for metal.
      */
-    public final static String METAL = "metal";
+    public static final String METAL = "metal";
 
     /**
      * The string representation for plastic.
      */
-    public final static String PLASTIC = "plastic";
+    public static final String PLASTIC = "plastic";
 
     /**
      * The string representation for spider.
      */
-    public final static String SPIDER = "spider";
+    public static final String SPIDER = "spider";
 
     /**
      * The string representation for tiger.
      */
-    public final static String TIGER = "tiger";
+    public static final String TIGER = "tiger";
 
     /**
      * The string representation for snake.
      */
-    public final static String SNAKE = "snake";
+    public static final String SNAKE = "snake";
 
     /**
      * The string representation for thunderstorm.
      */
-    public final static String THUNDERSTORM = "thunderstorm";
+    public static final String THUNDERSTORM = "thunderstorm";
 
 
     /**

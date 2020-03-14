@@ -57,7 +57,7 @@ public interface Backend {
      *
      * @param numOfPips the number of pips (the dice)
      * @param roll      the rolled number
-     * @return
+     * @return the resulting game state
      * @throws IllegalGameStateException if rolling the dice is not allowed
      * @throws RollDiceException         if the player chose the wrong dice
      */
@@ -70,6 +70,12 @@ public interface Backend {
      */
     List<Resource> getResourcesAsList() throws IllegalGameStateException;
 
+    /**
+     * Returns true if the player has actions left to do, e.g drawing
+     * a car or building.
+     *
+     * @return true if the player has actions left to do
+     */
     boolean nextActionPossible();
 
     /**
@@ -102,6 +108,11 @@ public interface Backend {
      */
     void checkInitialized() throws IllegalGameStateException;
 
+    /**
+     * Sets the game state of the backend.
+     *
+     * @param gameState the new game state
+     */
     void setGameState(GameState gameState);
 
 }

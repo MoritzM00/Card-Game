@@ -4,6 +4,12 @@ import model.GameState;
 
 import static model.BuildableObject.BALLON;
 
+/**
+ * A ballon is buildable of type {@link Rescue}.
+ *
+ * @author Moritz
+ * @version 1.0
+ */
 public class Ballon extends Rescue {
 
     private static final int WOOD = 1;

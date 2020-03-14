@@ -2,6 +2,14 @@ package model.buildables.rescue;
 
 import static model.BuildableObject.SAILING_RAFT;
 
+/**
+ * The sailing raft is a {@link Rescue}.
+ * Defines the required amount of resources to build this,
+ * as well as the required dice and the number to win.
+ *
+ * @author Moritz
+ * @version 1.0
+ */
 public class SailingRaft extends Rescue {
     private static final int WOOD = 4;
     private static final int METAL = 2;

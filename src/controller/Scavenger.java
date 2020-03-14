@@ -267,6 +267,11 @@ public class Scavenger {
         }
     }
 
+    /**
+     * Returns true if the player can build something.
+     *
+     * @return if the player can build
+     */
     protected boolean playerCanBuild() {
         // check if the player is able to build sth
         return (!allBuildableObjects().isEmpty());

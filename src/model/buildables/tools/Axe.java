@@ -1,8 +1,15 @@
 package model.buildables.tools;
 
-
 import static model.BuildableObject.AXE;
 
+/**
+ * An axe is a {@link Tool}.
+ *
+ * The fight bonus of an axe is 2.
+ *
+ * @author Moritz
+ * @version 1.0
+ */
 public class Axe extends Tool {
 
     private static final int WOOD = 0;
