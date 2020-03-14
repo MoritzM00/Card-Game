@@ -7,7 +7,13 @@ import model.exceptions.CardStackException;
 import java.util.LinkedList;
 import java.util.List;
 
-import static model.Card.*;
+import static model.Card.METAL_TYPE_ID;
+import static model.Card.PLASTIC_TYPE_ID;
+import static model.Card.SNAKE_TYPE_ID;
+import static model.Card.SPIDER_TYPE_ID;
+import static model.Card.THUNDERSTORM_TYPE_ID;
+import static model.Card.TIGER_TYPE_ID;
+import static model.Card.WOOD_TYPE_ID;
 
 /**
  * This class holds all cards and manages the interactions of drawing cards

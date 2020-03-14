@@ -17,9 +17,12 @@ public enum GameState {
     // if there are no commands specified, it means
     // that all commands are allowed
 
-    // win, lose, and survived are only short-term game states and
+    // win, lose, catastrophe and survived are only temporary game states and
     // are used for communication between backend and frontend.
-    // lose and survived result in the scavenge state,
+    // The game will not stay in those states, but evaluates to the result of
+    // those states and updates to the corresponding game state.
+
+    // catastrophe, lose and survived result in the scavenge state,
     // win results in the end state
 
     /**
@@ -86,10 +89,10 @@ public enum GameState {
     public void checkGameState(CardGameCommand command)
             throws IllegalGameStateException {
 
-        if (allowedCommands != null &&
-                !allowedCommands.contains(command)) {
-            throw new IllegalGameStateException("this command is currently" +
-                                                        " not allowed");
+        if (allowedCommands != null
+                && !allowedCommands.contains(command)) {
+            throw new IllegalGameStateException("this command is currently"
+                                                        + " not allowed");
         }
     }
 }

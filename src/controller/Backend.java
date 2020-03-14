@@ -21,10 +21,16 @@ import java.util.List;
 public interface Backend {
 
     /**
-     * Starts the game.
-     * Initializes the card stack of the game.
+     * Starts the game and
+     * initializes the card stack of the game.
      *
-     * @param cards an array of strings representing the cards
+     * The cards have to be 64 in total and each type of card has
+     * to match a specific number which is defined in {@link model.CardType}.
+     * Card lists that do not match those numbers will be declined.
+     *
+     * @param cards a list of cards
+     * @throws CardStackException        if the number of cards is incorrect
+     * @throws IllegalGameStateException if this command is currently not allowed
      */
     void start(List<Card> cards) throws CardStackException, IllegalGameStateException;
 
@@ -49,6 +55,8 @@ public interface Backend {
      * Resets the whole game. The player starts with zero resources
      * and has all 64 cards in the exact sequence which was specified at the
      * beginning of this game.
+     *
+     * @throws IllegalGameStateException if this command is currently not allowed
      */
     void reset() throws IllegalGameStateException;
 
@@ -67,14 +75,15 @@ public interface Backend {
      * Returns all resources as a list.
      *
      * @return all resources as a list.
+     * @throws IllegalGameStateException if this command is currently not allowed
      */
     List<Resource> getResourcesAsList() throws IllegalGameStateException;
 
     /**
-     * Returns true if the player has actions left to do, e.g drawing
+     * Returns true if the player has no actions left to do, e.g drawing
      * a car or building.
      *
-     * @return true if the player has actions left to do
+     * @return true if the player has no actions left to do
      */
     boolean noActionPossible();
 
@@ -83,6 +92,7 @@ public interface Backend {
      * with the current level of resources.
      *
      * @return all buildable objects
+     * @throws IllegalGameStateException if this command is currently not allowed
      */
     List<BuildableObject> getAllBuildableObjectsAsList() throws IllegalGameStateException;
 
@@ -90,6 +100,7 @@ public interface Backend {
      * Returns all built objects as list, e.g. those that the player already built
      *
      * @return the built objects
+     * @throws IllegalGameStateException if this command is currently not allowed
      */
     List<BuildableObject> getAllBuiltObjectsAsList() throws IllegalGameStateException;
 
@@ -104,7 +115,7 @@ public interface Backend {
      * Checks if the game has already been initialized
      * and throws an error if it is not the case
      *
-     * @throws IllegalGameStateException if it hasn't been initialized yet.
+     * @throws IllegalGameStateException if the game hasn't been initialized yet.
      */
     void checkInitialized() throws IllegalGameStateException;
 

@@ -15,7 +15,11 @@ import view.cli.CardGameCommand;
 
 import java.util.List;
 
-import static model.GameState.*;
+import static model.GameState.ENCOUNTER;
+import static model.GameState.END;
+import static model.GameState.INVALID;
+import static model.GameState.SCAVENGE;
+import static model.GameState.WIN;
 
 /**
  * This class manages the card game.

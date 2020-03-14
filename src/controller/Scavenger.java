@@ -1,11 +1,19 @@
 package controller;
 
-import model.*;
+import model.Buildable;
+import model.BuildableObject;
+import model.Card;
+import model.CardType;
+import model.GameState;
 import model.buildables.building.Shack;
 import model.cards.resources.Resource;
 import model.exceptions.ScavengerException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
 
 import static model.CardType.AMOUNT_OF_DIFFERENT_RESOURCES;
 

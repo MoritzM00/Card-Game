@@ -1,7 +1,7 @@
 package model.exceptions;
 
 /**
- * A bad input exception occurs if the user provides wrong input strings.
+ * A bad input exception occurs if the user provides wrong input.
  *
  * @author Moritz
  * @version 1.00

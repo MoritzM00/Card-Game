@@ -10,10 +10,11 @@ import model.buildables.tools.Axe;
 import model.buildables.tools.Club;
 
 /**
- * Defines all buildable objects.
+ * Defines all Subclasses of {@link Buildable}.
  *
  * @author Moritz
  * @version 1.0
+ * @see Buildable
  */
 public enum BuildableObject {
 
