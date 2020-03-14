@@ -53,7 +53,7 @@ public class CardGameManager implements Backend {
         this.gameState.checkGameState(CardGameCommand.DRAW);
 
         // check if next action is possible
-        if (!nextActionPossible()) {
+        if (noActionPossible()) {
             return null;
         }
         Card card = cardHolder.getNextCard();
@@ -181,21 +181,21 @@ public class CardGameManager implements Backend {
     }
 
     @Override
-    public boolean nextActionPossible() {
+    public boolean noActionPossible() {
         if (!cardHolder.hasCards()) {
             // if the player has to fight, return true
             if (gameState == ENCOUNTER) {
-                return true;
+                return false;
             }
             if (!scavenger.playerCanBuild()) {
                 setGameState(END);
-                return false;
+                return true;
             } else {
                 setGameState(SCAVENGE);
-                return true;
+                return false;
             }
         }
-        return true;
+        return false;
     }
 
 

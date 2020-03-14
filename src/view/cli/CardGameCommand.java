@@ -60,7 +60,7 @@ public enum CardGameCommand implements Command {
             frontend.showGameStateMessage(result);
             // if the card stack is empty and there is no action left
             // then lost is returned now
-            if (!backend.nextActionPossible()) {
+            if (backend.noActionPossible()) {
                 // it means that the game state is "END"
                 // therefore "lost" will be printed
                 frontend.showGameStateMessage(backend.getGameState());
@@ -92,7 +92,7 @@ public enum CardGameCommand implements Command {
             }
 
             // then check for empty card stack
-            if (!backend.nextActionPossible()) {
+            if (backend.noActionPossible()) {
                 // update the game state variable after the method execution
                 // of nextActionPossible()
                 stateAfterDraw = backend.getGameState();

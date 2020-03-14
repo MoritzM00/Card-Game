@@ -76,7 +76,7 @@ public interface Backend {
      *
      * @return true if the player has actions left to do
      */
-    boolean nextActionPossible();
+    boolean noActionPossible();
 
     /**
      * Returns all buildable objects as list, e.g. those objects that can be built
