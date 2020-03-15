@@ -82,7 +82,12 @@ public class CommandLineInterface implements Frontend {
         }
     }
 
-    public void showListOfBuildable(List<BuildableObject> buildableObjects) throws IllegalGameStateException {
+    /**
+     * Shows a list of buildable objects to the user.
+     *
+     * @param buildableObjects the list of buildable objects
+     */
+    public void showListOfBuildable(List<BuildableObject> buildableObjects) {
         if (buildableObjects.isEmpty()) {
             showMessage(EMPTY);
             return;

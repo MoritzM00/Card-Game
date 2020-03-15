@@ -72,6 +72,8 @@ public interface Frontend {
 
     /**
      * Shows all resources that the user has drawn until this point of time.
+     *
+     * @throws IllegalGameStateException if this command is currently not allowed
      */
     void showResources() throws IllegalGameStateException;
 
@@ -86,11 +88,15 @@ public interface Frontend {
     /**
      * Shows all buildable objects to the user, e.g. those that the user
      * can build but hasn't done so yet
+     *
+     * @throws IllegalGameStateException if this command is currently not allowed
      */
     void showAllBuildableObjects() throws IllegalGameStateException;
 
     /**
      * Shows all already built objects to the user
+     *
+     * @throws IllegalGameStateException if this command is currently not allowed
      */
     void showAllBuiltObjects() throws IllegalGameStateException;
 }

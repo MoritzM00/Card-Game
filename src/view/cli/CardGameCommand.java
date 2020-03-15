@@ -5,7 +5,11 @@ import model.BuildableObject;
 import model.Card;
 import model.CardType;
 import model.GameState;
-import model.exceptions.*;
+import model.exceptions.BadInputException;
+import model.exceptions.CardStackException;
+import model.exceptions.IllegalGameStateException;
+import model.exceptions.RollDiceException;
+import model.exceptions.ScavengerException;
 import view.Frontend;
 
 import java.util.LinkedList;
@@ -25,7 +29,9 @@ import static view.Frontend.OK;
 public enum CardGameCommand implements Command {
 
     /**
-     * EXAMPLE IMPLEMENTATION
+     * Starts the game.
+     *
+     * The user has to provide the 64 cards.
      */
     START("^start ([\\w\\s,]+)$") {
         @Override
@@ -42,6 +48,10 @@ public enum CardGameCommand implements Command {
         }
     },
 
+    /**
+     * Rolls the dice.
+     * The user has to provide the dice (number of pips) and the rolled number
+     */
     ROLLDX("^rollD[+]?[0]*(4|6|8) ([+]?[0]*\\d)$") {
         @Override
         public void execute(Frontend frontend, Backend backend) throws BadInputException {
@@ -68,6 +78,10 @@ public enum CardGameCommand implements Command {
         }
     },
 
+    /**
+     * Draws the next card.
+     * No arguments allowed.
+     */
     DRAW("^draw$") {
         @Override
         public void execute(Frontend frontend, Backend backend) {
@@ -101,6 +115,10 @@ public enum CardGameCommand implements Command {
         }
     },
 
+    /**
+     * Builds a buildable object.
+     * The user has to provide the name of the buildable.
+     */
     BUILD("^build (\\w+)$") {
         @Override
         public void execute(Frontend frontend, Backend backend) throws BadInputException {
@@ -115,6 +133,9 @@ public enum CardGameCommand implements Command {
         }
     },
 
+    /**
+     * Shows the user all buildables that he/she can currently build
+     */
     POSSIBLE_BUILDS("^build\\?$") {
         @Override
         public void execute(Frontend frontend, Backend backend) {
@@ -126,6 +147,9 @@ public enum CardGameCommand implements Command {
         }
     },
 
+    /**
+     * Lists all buildables that the player already built
+     */
     LIST_BUILDINGS("^list-buildings$") {
         @Override
         public void execute(Frontend frontend, Backend backend) {
@@ -137,6 +161,9 @@ public enum CardGameCommand implements Command {
         }
     },
 
+    /**
+     * Lists all resources which the player has drawn and not used.
+     */
     LIST_RESOURCES("^list-resources$") {
         @Override
         public void execute(Frontend frontend, Backend backend) {
@@ -148,6 +175,11 @@ public enum CardGameCommand implements Command {
         }
     },
 
+    /**
+     * Resets the game to the starting point.
+     * The player starts with the same card deck which he provided
+     * in the beginning of the game
+     */
     RESET("^reset$") {
         @Override
         public void execute(Frontend frontend, Backend backend) {
@@ -228,6 +260,9 @@ public enum CardGameCommand implements Command {
         }
     },
 
+    /**
+     * Quits the game.
+     */
     QUIT("^quit$") {
         @Override
         public void execute(Frontend frontend, Backend backend) {
@@ -235,9 +270,6 @@ public enum CardGameCommand implements Command {
         }
     };
 
-    /**
-     * An Array of Strings containing the user input.
-     */
     private String[] arguments;
     private Pattern pattern;
 
@@ -268,6 +300,13 @@ public enum CardGameCommand implements Command {
         return true;
     }
 
+    /**
+     * Parses a buildable object by its string value.
+     *
+     * @param typeOfBuildable the type of the buildable as a string
+     * @return the buildable object
+     * @throws BadInputException if type couldn't be parsed
+     */
     BuildableObject parseBuildableObject(String typeOfBuildable) throws BadInputException {
         BuildableObject result = BuildableObject.getBuildableObjectByTypeString(typeOfBuildable);
         if (result == null) {
@@ -299,6 +338,13 @@ public enum CardGameCommand implements Command {
         }
     }
 
+    /**
+     * Parses an integer.
+     *
+     * @param integer the integer as a numeric string
+     * @return the parsed int
+     * @throws BadInputException if integer couldn't be parsed
+     */
     protected static int parseInteger(String integer) throws BadInputException {
         int result;
         try {
@@ -309,6 +355,13 @@ public enum CardGameCommand implements Command {
         return result;
     }
 
+    /**
+     * Parses the cards that the user provides with the start command
+     *
+     * @param cards the cards
+     * @return the list of parsed cards
+     * @throws BadInputException if cards couldn't be parsed
+     */
     protected LinkedList<Card> parseCards(String[] cards) throws BadInputException {
         LinkedList<Card> result = new LinkedList<>();
         for (String cardAsString : cards) {

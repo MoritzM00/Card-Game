@@ -10,14 +10,49 @@ import static view.Frontend.NO_ARGUMENTS_ALLOWED;
  */
 public enum BadInputChecker {
 
+    /**
+     * Help string for the start command.
+     */
     START("start", "<cards>"),
+
+    /**
+     * Help string for the rolldx command.
+     */
     ROLLDX("rollD", "rolld<4|6|8> <numberRolled>"),
+
+    /**
+     * Help string for the build command.
+     */
     BUILD("build ", "<buildable>"),
+
+    /**
+     * Help string for the draw command.
+     */
     DRAW("draw", NO_ARGUMENTS_ALLOWED),
+
+    /**
+     * Help string for the build? command.
+     */
     POSSIBLE_BUILDS("build?", NO_ARGUMENTS_ALLOWED),
+
+    /**
+     * Help string for the list-buildings command.
+     */
     LIST_BUILDINGS("list-buildings", NO_ARGUMENTS_ALLOWED),
+
+    /**
+     * Help string for the list-resources command.
+     */
     LIST_RESOURCES("list-resources", NO_ARGUMENTS_ALLOWED),
+
+    /**
+     * Help string for the reset command.
+     */
     RESET("reset", NO_ARGUMENTS_ALLOWED),
+
+    /**
+     * Help string for the quit command.
+     */
     QUIT("quit", NO_ARGUMENTS_ALLOWED);
 
 
