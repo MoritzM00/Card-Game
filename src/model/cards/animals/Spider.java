@@ -2,6 +2,12 @@ package model.cards.animals;
 
 import model.CardType;
 
+/**
+ * A spider is a special card of type {@link Animal}.
+ *
+ * @author Moritz
+ * @version 1.0
+ */
 public class Spider extends Animal {
 
     private static final int REQUIRED_NUMBER_OF_PIPS = 4;

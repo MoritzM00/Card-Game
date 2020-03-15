@@ -8,7 +8,9 @@ import model.cards.resources.Metal;
 import model.cards.resources.Plastic;
 import model.cards.resources.Wood;
 
-import static model.Card.*;
+import static model.Card.METAL_TYPE_ID;
+import static model.Card.PLASTIC_TYPE_ID;
+import static model.Card.WOOD_TYPE_ID;
 
 /**
  * Defines the different card types and the amount of each card.

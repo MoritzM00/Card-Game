@@ -2,6 +2,12 @@ package model.cards.animals;
 
 import model.CardType;
 
+/**
+ * A tiger is special card of type {@link Animal}.
+ *
+ * @author Moritz
+ * @version 1.0
+ */
 public class Tiger extends Animal {
 
     private static final int REQUIRED_NUMBER_OF_PIPS = 8;
