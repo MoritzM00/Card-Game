@@ -78,6 +78,11 @@ public enum GameState {
 
     private final List<CardGameCommand> allowedCommands;
 
+    /**
+     * Initializes a game state with its respective allowed commands.
+     *
+     * @param commands all allowed commands
+     */
     GameState(CardGameCommand... commands) {
         if (commands == null) {
             allowedCommands = null;
@@ -86,6 +91,12 @@ public enum GameState {
         }
     }
 
+    /**
+     * Checks if the given card game command is allowed in this game state.
+     *
+     * @param command the card game command
+     * @throws IllegalGameStateException if it is not allowed
+     */
     public void checkGameState(CardGameCommand command)
             throws IllegalGameStateException {
 
