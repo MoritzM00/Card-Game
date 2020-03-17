@@ -15,7 +15,12 @@ import view.cli.CardGameCommand;
 
 import java.util.List;
 
-import static model.GameState.*;
+import static model.GameState.ENCOUNTER;
+import static model.GameState.END;
+import static model.GameState.ENDEAVOR;
+import static model.GameState.INVALID;
+import static model.GameState.SCAVENGE;
+import static model.GameState.WIN;
 
 /**
  * This class manages the card game.
@@ -55,7 +60,7 @@ public class CardGameManager implements Backend {
         this.gameState.checkGameState(CardGameCommand.DRAW);
 
         // check if next action is possible
-        if (noActionPossible()) {
+        if (!cardHolder.hasCards() || noActionPossible()) {
             return null;
         }
         Card card = cardHolder.getNextCard();

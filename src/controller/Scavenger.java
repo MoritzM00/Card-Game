@@ -1,11 +1,19 @@
 package controller;
 
-import model.*;
+import model.Buildable;
+import model.BuildableObject;
+import model.Card;
+import model.CardType;
+import model.GameState;
 import model.buildables.building.Shack;
 import model.cards.resources.Resource;
 import model.exceptions.ScavengerException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
 
 import static model.CardType.AMOUNT_OF_DIFFERENT_RESOURCES;
 
@@ -111,6 +119,12 @@ public class Scavenger {
         }
     }
 
+    /**
+     * Deletes the resources needed for the given built object from the shack.
+     *
+     * @param builtObject the built object
+     * @return the remaining resource array, if the shack didn't contain all needed resources
+     */
     private int[] deleteResourcesFromShack(Buildable builtObject) {
         // resource level before building the specified object
         int[] newResourceLevel = this.resourcesByTypeID.clone();
@@ -212,6 +226,7 @@ public class Scavenger {
             Resource res = resources.removeFirst();
             shack.addLast(res);
         }
+        //Terminal.printLine(Arrays.toString(shack.getSavedResources().toArray()));
     }
 
     // updates the resource distribution after a draw command
@@ -220,12 +235,15 @@ public class Scavenger {
             resources.addFirst(resource);
             return;
         }
-        shack.addFirst(resource);
         if (!shack.hasSpace()) {
             // then the last card in the shack has to go to the other resource stack
+            shack.addFirst(resource);
             Resource lastInShack = shack.removeLast();
             resources.addFirst(lastInShack);
+        } else {
+            shack.addFirst(resource);
         }
+        //Terminal.printLine(Arrays.toString(shack.getSavedResources().toArray()));
     }
 
     /**
