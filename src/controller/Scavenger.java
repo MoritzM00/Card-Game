@@ -226,7 +226,6 @@ public class Scavenger {
             Resource res = resources.removeFirst();
             shack.addLast(res);
         }
-        //Terminal.printLine(Arrays.toString(shack.getSavedResources().toArray()));
     }
 
     // updates the resource distribution after a draw command
@@ -243,7 +242,6 @@ public class Scavenger {
         } else {
             shack.addFirst(resource);
         }
-        //Terminal.printLine(Arrays.toString(shack.getSavedResources().toArray()));
     }
 
     /**
