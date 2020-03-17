@@ -15,11 +15,7 @@ import view.cli.CardGameCommand;
 
 import java.util.List;
 
-import static model.GameState.ENCOUNTER;
-import static model.GameState.END;
-import static model.GameState.INVALID;
-import static model.GameState.SCAVENGE;
-import static model.GameState.WIN;
+import static model.GameState.*;
 
 /**
  * This class manages the card game.
@@ -188,7 +184,7 @@ public class CardGameManager implements Backend {
     public boolean noActionPossible() {
         if (!cardHolder.hasCards()) {
             // if the player has to fight, return true
-            if (gameState == ENCOUNTER) {
+            if (gameState == ENCOUNTER || gameState == ENDEAVOR) {
                 return false;
             }
             if (!scavenger.playerCanBuild()) {

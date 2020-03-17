@@ -5,19 +5,14 @@ import model.BuildableObject;
 import model.Card;
 import model.CardType;
 import model.GameState;
-import model.exceptions.BadInputException;
-import model.exceptions.CardStackException;
-import model.exceptions.IllegalGameStateException;
-import model.exceptions.RollDiceException;
-import model.exceptions.ScavengerException;
+import model.exceptions.*;
 import view.Frontend;
 
 import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static model.GameState.CATASTROPHE;
-import static model.GameState.SCAVENGE;
+import static model.GameState.*;
 import static view.Frontend.OK;
 
 /**
@@ -130,6 +125,11 @@ public enum CardGameCommand implements Command {
                 return;
             }
             frontend.showGameStateMessage(backend.getGameState());
+            if (backend.noActionPossible()) {
+                backend.setGameState(END);
+                frontend.showGameStateMessage(END);
+            }
+
         }
     },
 
@@ -171,6 +171,15 @@ public enum CardGameCommand implements Command {
                 frontend.showResources();
             } catch (IllegalGameStateException ex) {
                 frontend.showError(ex.getMessage());
+            }
+        }
+    },
+
+    FAST_DRAW("fd") {
+        @Override
+        public void execute(Frontend frontend, Backend backend) throws BadInputException {
+            for (int i = 0; i < 5; i++) {
+                DRAW.execute(frontend, backend);
             }
         }
     },

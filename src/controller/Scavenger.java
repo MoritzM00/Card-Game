@@ -1,19 +1,11 @@
 package controller;
 
-import model.Buildable;
-import model.BuildableObject;
-import model.Card;
-import model.CardType;
-import model.GameState;
+import model.*;
 import model.buildables.building.Shack;
 import model.cards.resources.Resource;
 import model.exceptions.ScavengerException;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import static model.CardType.AMOUNT_OF_DIFFERENT_RESOURCES;
 
@@ -69,18 +61,20 @@ public class Scavenger {
         // else add it to the built objects list
         alreadyBuiltObjects.addFirst(buildable);
 
-        // can be built, delete resources
         // first, check the shack, then unsaved resources.
         if (shack != null) {
-            shack.setSavedResources(deleteResourcesAfterBuild(builtObject, shack.getSavedResources()));
+            int[] remainingResourceArr = deleteResourcesFromShack(builtObject);
+            // delete the possible remaining resources from the main stack
+            deleteResourcesFromMainStack(remainingResourceArr);
+        } else {
+            deleteResourcesFromMainStack(builtObject.getAmountOfResourcesNeeded());
         }
-        resources = deleteResourcesAfterBuild(builtObject, resources);
-
-        // update the resource distribution
-        updateShackAfterBuild();
 
         //check if a shack or fireplace has been built
         checkForShackOrFirePlace(buildable);
+
+        // update the resource distribution
+        updateShackAfterBuild();
 
         // update fight bonus for possible encounters
         this.fightBonus = Math.max(builtObject.getFightBonus(), fightBonus);
@@ -117,23 +111,12 @@ public class Scavenger {
         }
     }
 
-    /**
-     * Deletes the resources needed for the specified built object from the specified resource stack.
-     *
-     * @param builtObject   the built object
-     * @param resourceStack the resource stack that will be modified
-     * @return the updated resource list
-     */
-    LinkedList<Resource> deleteResourcesAfterBuild(Buildable builtObject, LinkedList<Resource> resourceStack) {
+    private int[] deleteResourcesFromShack(Buildable builtObject) {
         // resource level before building the specified object
-        int[] oldResourceLevel = this.resourcesByTypeID.clone();
+        int[] newResourceLevel = this.resourcesByTypeID.clone();
 
         // amount of needed resources
         int[] resourceArr = builtObject.getAmountOfResourcesNeeded();
-
-        // new level of resources, after building the object
-        // updates the attribute itself
-        subtractResourceArr(resourceArr);
 
         // store the unused resources
         LinkedList<Resource> unusedResources = new LinkedList<>();
@@ -141,27 +124,64 @@ public class Scavenger {
         // while the int at the index of the resource
         // is higher than the new resource level,
         // delete the resource from the stack
-        for (Resource resource : resourceStack) {
+        for (Resource resource : shack.getSavedResources()) {
             int typeID = resource.getTypeID();
-            if (oldResourceLevel[typeID] > resourcesByTypeID[typeID]) {
+            int currentLevel = newResourceLevel[typeID]; // the current value at that position
+
+            if (currentLevel > (currentLevel - resourceArr[typeID])) {
                 // if true, then this resource will be left out from the resulting card stack
                 // update the old resource level
-                oldResourceLevel[typeID]--;
+                newResourceLevel[typeID]--;
+                resourceArr[typeID]--;
             } else {
                 unusedResources.addLast(resource);
             }
         }
-        return unusedResources;
+        this.resourcesByTypeID = newResourceLevel;
+        this.shack.setSavedResources(unusedResources);
+        return resourceArr;
     }
 
-    // subtracts the given array from the resource array, has to be length 3
-    private void subtractResourceArr(int[] subtrahend) {
-        if (subtrahend.length != AMOUNT_OF_DIFFERENT_RESOURCES) {
-            return;
+    /**
+     * Deletes the resources needed for the specified built object from the specified resource stack.
+     *
+     * @param resourceArr the resource array from the built object
+     */
+    void deleteResourcesFromMainStack(int[] resourceArr) {
+        // amount of needed resources
+        int[] neededResources = resourceArr.clone();
+
+        // new resource level
+        int[] newResourceLevel = subtractEqualSizeArr(resourcesByTypeID, neededResources);
+
+        // store the unused resources
+        LinkedList<Resource> unusedResources = new LinkedList<>();
+
+        // while the int at the index of the resource
+        // is higher than the new resource level,
+        // delete the resource from the stack
+        for (Resource resource : resources) {
+            int typeID = resource.getTypeID();
+            if (resourcesByTypeID[typeID] > newResourceLevel[typeID]) {
+                // if true, then this resource will be left out from the resulting card stack
+                resourcesByTypeID[typeID]--;
+            } else {
+                unusedResources.addLast(resource);
+            }
         }
-        for (int i = 0; i < AMOUNT_OF_DIFFERENT_RESOURCES; i++) {
-            this.resourcesByTypeID[i] -= subtrahend[i];
+        resources = unusedResources;
+    }
+
+
+    private int[] subtractEqualSizeArr(int[] arr, int[] subtrahend) {
+        if (subtrahend.length != arr.length) {
+            return null;
         }
+        int[] result = new int[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            result[i] = arr[i] - subtrahend[i];
+        }
+        return result;
     }
 
     /**
