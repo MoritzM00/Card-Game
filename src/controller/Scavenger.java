@@ -220,13 +220,12 @@ public class Scavenger {
             resources.addFirst(resource);
             return;
         }
-        if (!shack.isEmpty()) {
-            // the drawn card has to go to the shack, the last card
-            // in the shack to the other resource stack
+        shack.addFirst(resource);
+        if (!shack.hasSpace()) {
+            // then the last card in the shack has to go to the other resource stack
             Resource lastInShack = shack.removeLast();
             resources.addFirst(lastInShack);
         }
-        shack.addFirst(resource);
     }
 
     /**
