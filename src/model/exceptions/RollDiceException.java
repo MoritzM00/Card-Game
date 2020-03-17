@@ -26,11 +26,14 @@ public class RollDiceException extends Exception {
 
     @Override
     public String getMessage() {
+        if (rolledNumber == 0) {
+            return "zero cannot be the result of the roll";
+        }
         if (rolledNumber > requiredDice) {
             return String.format("rolled number (%d)"
-                                         + " exceeds the maximum (%d) of this dice.",
-                                 rolledNumber,
-                                 requiredDice);
+                                 + " exceeds the maximum (%d) of this dice.",
+                    rolledNumber,
+                    requiredDice);
         }
         return String.format("wrong dice. Required dice: %d", requiredDice);
     }

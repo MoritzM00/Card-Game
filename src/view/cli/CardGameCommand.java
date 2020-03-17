@@ -47,7 +47,7 @@ public enum CardGameCommand implements Command {
      * Rolls the dice.
      * The user has to provide the dice (number of pips) and the rolled number
      */
-    ROLLDX("^rollD[+]?[0]*(4|6|8) ([+]?[0]*\\d)$") {
+    ROLLDX("^rollD[+]?[0]*(4|6|8) ([+]?[0]*\\d+)$") {
         @Override
         public void execute(Frontend frontend, Backend backend) throws BadInputException {
             final String[] arguments = getArguments();
@@ -125,6 +125,9 @@ public enum CardGameCommand implements Command {
                 return;
             }
             frontend.showGameStateMessage(backend.getGameState());
+            if (backend.getGameState() == WIN) {
+                backend.setGameState(END);
+            }
             if (backend.noActionPossible()) {
                 backend.setGameState(END);
                 frontend.showGameStateMessage(END);

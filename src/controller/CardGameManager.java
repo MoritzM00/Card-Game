@@ -45,6 +45,8 @@ public class CardGameManager implements Backend {
         this.gameState.checkGameState(CardGameCommand.START);
         cardHolder.initializeCardStack(cards);
         setGameState(SCAVENGE);
+        // reset in case of start command after Win
+        reset();
     }
 
     @Override
@@ -124,7 +126,8 @@ public class CardGameManager implements Backend {
     private GameState checkEndeavor(Rescue rescue, int numOfPips, int roll) throws RollDiceException {
         int requiredNumOfPips = rescue.getRequiredNumOfPips();
         if (requiredNumOfPips != numOfPips
-                || roll > numOfPips) {
+            || roll > numOfPips
+            || roll == 0) {
             throw new RollDiceException(requiredNumOfPips, roll);
         }
 
@@ -150,7 +153,8 @@ public class CardGameManager implements Backend {
             throws RollDiceException {
         int requiredNumOfPips = animalCard.getRequiredNumOfPips();
         if (requiredNumOfPips != numOfPips
-                || roll > numOfPips) {
+            || roll > numOfPips
+            || roll == 0) {
             throw new RollDiceException(requiredNumOfPips, roll);
         }
 

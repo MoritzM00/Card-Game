@@ -13,12 +13,12 @@ public enum BadInputChecker {
     /**
      * Help string for the start command.
      */
-    START("start", "<cards>"),
+    START("start", "<card1,card2,...,card64>"),
 
     /**
      * Help string for the rolldx command.
      */
-    ROLLDX("rollD", "rolld<4|6|8> <numberRolled>"),
+    ROLLDX("rollD", "rollD<4|6|8> <rolledNumber>"),
 
     /**
      * Help string for the build command.
