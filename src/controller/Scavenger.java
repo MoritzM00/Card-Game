@@ -29,6 +29,12 @@ public class Scavenger {
     // e.g. wood has type 0, so [0] represents the amount of wood which the player has
     private int[] resourcesByTypeID;
 
+    // the last drawn resource card is at the beginning of this list
+    // and will be reversed before printing to the user.
+    // Due to changes to the order of resources, it would have been necessary to change the whole
+    // implementation of resource distribution methods, because of direction of iterating.
+    // this is the reason why I used linked lists over stacks, to be able to insert resources at the
+    // beginning and at the end of the list
     private LinkedList<Resource> resources;
 
     private boolean hasFirePlace;
