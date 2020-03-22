@@ -96,7 +96,7 @@ public class CardGameManager implements Backend {
         switch (gameState) {
             case ENDEAVOR:
                 // it is secure to down cast to rescue, because the last
-                // drawn card has to be a rescue in this case
+                // built object has to be a rescue in this case
                 Rescue rescue = (Rescue) scavenger.getLastBuiltObject().getAccordingBuildable();
                 result = checkEndeavor(rescue, numOfPips, roll);
                 if (result == WIN) {
@@ -107,7 +107,7 @@ public class CardGameManager implements Backend {
                 }
                 break;
             case ENCOUNTER:
-                // last card has to be an animal, again, this is safe to assume
+                // last card has to be an animal
                 Animal animalCard = (Animal) cardHolder.getLastDrawnCard();
                 result = checkEncounter(animalCard, numOfPips, roll);
                 scavenger.updateResources(result);
@@ -192,7 +192,8 @@ public class CardGameManager implements Backend {
     @Override
     public boolean noActionPossible() {
         if (!cardHolder.hasCards()) {
-            // if the player has to fight, return true
+
+            // if the game is in those states, then an action is still possible
             if (gameState == ENCOUNTER || gameState == ENDEAVOR) {
                 return false;
             }
@@ -204,6 +205,7 @@ public class CardGameManager implements Backend {
                 return false;
             }
         }
+        // player can draw a card
         return false;
     }
 
