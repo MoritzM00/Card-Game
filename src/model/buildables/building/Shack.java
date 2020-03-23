@@ -101,14 +101,6 @@ public class Shack extends Building {
         this.savedResources = savedResources;
     }
 
-    /**
-     * Returns true if the shack is empty
-     *
-     * @return true if the shack is empty
-     */
-    public boolean isEmpty() {
-        return savedResources.isEmpty();
-    }
 
     /**
      * Removes the last resource in the shack
@@ -117,5 +109,14 @@ public class Shack extends Building {
      */
     public Resource removeLast() {
         return savedResources.removeLast();
+    }
+
+    /**
+     * Removes the first resource in the shack
+     *
+     * @return the first resource
+     */
+    public Resource removeFirst() {
+        return savedResources.removeFirst();
     }
 }

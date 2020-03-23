@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 import static model.CardType.AMOUNT_OF_DIFFERENT_RESOURCES;
 
@@ -35,7 +36,7 @@ public class Scavenger {
     // implementation of resource distribution methods, because of direction of iterating.
     // this is the reason why I used linked lists over stacks, to be able to insert resources at the
     // beginning and at the end of the list
-    private LinkedList<Resource> resources;
+    private Stack<Resource> resources;
 
     private boolean hasFirePlace;
     private Shack shack;
@@ -48,7 +49,7 @@ public class Scavenger {
      * Creates a new scavenger.
      */
     public Scavenger() {
-        this.resources = new LinkedList<>();
+        this.resources = new Stack<>();
         this.resourcesByTypeID = new int[AMOUNT_OF_DIFFERENT_RESOURCES];
         this.hasFirePlace = false;
         this.shack = null;
@@ -116,12 +117,11 @@ public class Scavenger {
         if (card == null) {
             return;
         }
-        int cardID = card.getTypeID();
         if (CardType.isResource(card)) {
             Resource resourceCard = (Resource) card;
             // update resource distribution
             updateShackAfterDraw(resourceCard);
-            resourcesByTypeID[cardID]++;
+            resourcesByTypeID[card.getTypeID()]++;
         }
     }
 
@@ -144,7 +144,9 @@ public class Scavenger {
         // while the int at the index of the resource
         // is higher than the new resource level,
         // delete the resource from the stack
-        for (Resource resource : shack.getSavedResources()) {
+        int iterations = shack.getSavedResources().size();
+        for (int i = 0; i < iterations; i++) {
+            Resource resource = shack.removeLast();
             int typeID = resource.getTypeID();
             int currentLevel = newResourceLevel[typeID]; // the current value at that position
 
@@ -154,7 +156,7 @@ public class Scavenger {
                 newResourceLevel[typeID]--;
                 resourceArr[typeID]--;
             } else {
-                unusedResources.addLast(resource);
+                unusedResources.addFirst(resource);
             }
         }
         this.resourcesByTypeID = newResourceLevel;
@@ -168,6 +170,8 @@ public class Scavenger {
      * @param resourceArr the resource array from the built object
      */
     void deleteResourcesFromMainStack(int[] resourceArr) {
+
+
         // amount of needed resources
         int[] neededResources = resourceArr.clone();
 
@@ -175,20 +179,23 @@ public class Scavenger {
         int[] newResourceLevel = subtractEqualSizeArr(resourcesByTypeID, neededResources);
 
         // store the unused resources
-        LinkedList<Resource> unusedResources = new LinkedList<>();
+        Stack<Resource> unusedResources = new Stack<>();
 
         // while the int at the index of the resource
         // is higher than the new resource level,
         // delete the resource from the stack
-        for (Resource resource : resources) {
+        int iterations = resources.size();
+        for (int i = 0; i < iterations; i++) {
+            Resource resource = resources.pop();
             int typeID = resource.getTypeID();
             if (resourcesByTypeID[typeID] > newResourceLevel[typeID]) {
                 // if true, then this resource will be left out from the resulting card stack
                 resourcesByTypeID[typeID]--;
             } else {
-                unusedResources.addLast(resource);
+                unusedResources.push(resource);
             }
         }
+        Collections.reverse(unusedResources);
         resources = unusedResources;
     }
 
@@ -229,25 +236,23 @@ public class Scavenger {
         }
         // moves cards to the shack while there is space
         while (shack.hasSpace() && !resources.isEmpty()) {
-            Resource res = resources.removeFirst();
-            shack.addLast(res);
+            Resource res = resources.pop();
+            shack.addFirst(res);
         }
     }
 
     // updates the resource distribution after a draw command
     private void updateShackAfterDraw(Resource resource) {
         if (shack == null) {
-            resources.addFirst(resource);
+            resources.push(resource);
             return;
         }
         if (!shack.hasSpace()) {
             // then the last card in the shack has to go to the other resource stack
-            shack.addFirst(resource);
-            Resource lastInShack = shack.removeLast();
-            resources.addFirst(lastInShack);
-        } else {
-            shack.addFirst(resource);
+            Resource lastInShack = shack.removeFirst();
+            resources.push(lastInShack);
         }
+        shack.addLast(resource);
     }
 
     /**
@@ -298,7 +303,7 @@ public class Scavenger {
             // delete the resources which are not in the shack.
             resourcesByTypeID[resourceCard.getTypeID()]--;
         }
-        this.resources = new LinkedList<>();
+        this.resources = new Stack<>();
     }
 
     // checks if the given buildable object is a shack or a fireplace and updates
@@ -360,12 +365,10 @@ public class Scavenger {
      * @return all resources as a list
      */
     protected List<Resource> getAllResourcesAsList() {
-        ArrayList<Resource> result = new ArrayList<>();
+        ArrayList<Resource> result = new ArrayList<>(resources);
         if (shack != null) {
             result.addAll(shack.getSavedResources());
         }
-        result.addAll(resources);
-        Collections.reverse(result);
         return result;
     }
 }
