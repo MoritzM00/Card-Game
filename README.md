@@ -18,7 +18,7 @@ The `edu.kit.informatik` package can be ignored.
 #### Command Line: Available commands
  - `start <cards>`
    - Initializes the game with the given cards
- - `rolldx \<rolled number>`
+ - `rolldx <rolled number>`
    - x: 4, 6 or 8
    - rolled number: the number you want to be rolled
  - `draw` 
