@@ -12,7 +12,7 @@ The `edu.kit.informatik` package can be ignored.
 
 #### Instructions
  - Clone the repository and setup a project.
- - In `src.view.main.java` run `main()` to execute the program.
+ - In `src/view/main.java` run `main()` to execute the program.
  
  
 #### Command Line: Available commands
